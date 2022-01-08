@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
+import { DataGrid } from '@mui/x-data-grid';
 
 export default function Crypto({coin}) {
 
@@ -23,15 +24,25 @@ export default function Crypto({coin}) {
         color: theme.palette.text.secondary,
       }));
 
-  return (
-    <div>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-        <Grid
+      /* 
+      import * as React from 'react';
+      import { DataGrid } from '@mui/x-data-grid';
+
+        export default function RowsGrid() {
+            return (
+            <div style={{ height: 250, width: '100%' }}>
+            <DataGrid
+                columns={[{ field: 'name' }]}
+                rows={[
+          { id: 1, name: 'React' },
+          { id: 2, name: 'MUI' },
+        ]}
+      />
+    </div>
+  );
+}*/
+
+/*          <Grid
             container
             direction="row"
             justifyContent="flex-start"
@@ -45,9 +56,34 @@ export default function Crypto({coin}) {
             <Item> <Typography>{price}</Typography></Item>
             <Item> <Typography>{market_cap}</Typography></Item>
 
-    </Grid>
+        </Grid>
+        */
 
-
+  return (
+    <div>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+        <Grid container spacing={2}>
+            <Grid item xs={1}>
+                <Item>{rank}</Item>
+            </Grid>
+            <Grid item xs={2}>
+                <Item>{name}</Item>
+            </Grid>
+            <Grid item xs={1}>
+                <Item>{symbol}</Item>
+            </Grid>
+            <Grid item xs={3}>
+                <Item>{price}</Item>
+            </Grid>
+            <Grid item xs={3}>
+                <Item>{market_cap}</Item>
+            </Grid>
+        </Grid>
 
         </AccordionSummary>
         <AccordionDetails>
