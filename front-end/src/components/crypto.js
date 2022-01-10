@@ -28,53 +28,48 @@ export default function Crypto({coin}) {
         color: theme.palette.text.secondary,
       })); */
 
-      const formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: 2
-      })
-      const formatterMarketCap = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        maximumFractionDigits: 0
-      })
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2
+  })
+  const formatterMarketCap = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 0
+  })
 
-      const redditData = (searchName) => {
-        data.map((value) => {
-          if(value.name === searchName) {
-            setReddit(`https://www.reddit.com/r/${value.searchTerm}/about.json`)
-          }
-        })
-        if(reddit === ''){
-          setReddit(`https://www.reddit.com/r/${searchName}/about.json`)
-        }
+
+  const statistics = async (name) => {
+    let reddit = ''
+    data.map((value) => {
+    if(value.name === name) {
+      reddit = `https://www.reddit.com/r/${value.searchTerm}/about.json`
       }
+    })
+    if(reddit === ''){
+      reddit = `https://www.reddit.com/r/${name}/about.json`
+    }
 
-
-      const statistics = async (name) => {
-        console.log(`HERE`);
-        redditData(name)
-        try {
-            const response = await fetch(reddit)
-            const myData = await response.json()
-            setSubscribers(myData.data.subscribers.toLocaleString("en-US"))
-          } catch (error) {
-            console.log(error);
-            setSubscribers('No Data')
-          }
-        console.log(`checking for ` + name)
-        console.log(`number of subscribers ` + subscribers)
+    try {
+      const response = await fetch(reddit)
+      const myData = await response.json()
+      setSubscribers(myData.data.subscribers.toLocaleString("en-US"))
+      } catch (error) {
+        console.log(error);
+        setSubscribers('No Data')
       }
+    }
 
   return (
-    <div>
+    <div >
       <Accordion onClick={() => statistics(name)}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-        <Grid container spacing={2} >
+          <Grid container spacing={2}>
             <Grid item xs={1}>
             {rank}    
             </Grid>
@@ -103,10 +98,10 @@ export default function Crypto({coin}) {
             <Grid item xs={2} align="left">
                 {formatterMarketCap.format(market_cap)}
             </Grid>
-        </Grid>
+          </Grid>
 
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails >
           <Typography>
           {`Reddit subscribers ` + subscribers}
           <Box
