@@ -17,6 +17,7 @@ import data from '../data.js'
 export default function Crypto({coin}) {
   const [subscribers, setSubscribers] = useState('')
   const [reddit, setReddit] = useState('')
+  const [redditLink, setRedditLink] = useState('')
 
   const {market_cap_rank: rank, name, symbol, current_price: price, market_cap, image} = coin
 
@@ -45,10 +46,12 @@ export default function Crypto({coin}) {
     data.map((value) => {
     if(value.name === name) {
       reddit = `https://www.reddit.com/r/${value.searchTerm}/about.json`
+      setRedditLink(`https://www.reddit.com/r/${value.searchTerm}`)
       }
     })
     if(reddit === ''){
       reddit = `https://www.reddit.com/r/${name}/about.json`
+      setRedditLink(`https://www.reddit.com/r/${name}`)
     }
 
     try {
@@ -115,6 +118,7 @@ export default function Crypto({coin}) {
           alt=""
           src={image}
         />
+        <a href={redditLink} target="_blank">r/{name} </a>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
             malesuada lacus ex, sit amet blandit leo lobortis eget.
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
