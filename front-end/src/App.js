@@ -8,6 +8,8 @@ function App() {
   const coinGeckoUrl = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false'
   const [search, setSearch] = useState('')
 
+  // QfdjLn4WrJdC1iIhYA_a1w
+  // secret ImpKTLCbEUI5enMfipsd0sNnjVwReg
 
   useEffect(()=> {
     axios.get(coinGeckoUrl).then((response) => {

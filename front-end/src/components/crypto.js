@@ -5,6 +5,8 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import GoogleTrends from './GoogleTrends.js'
+//import Trends from './Trends.js'
 // grid
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -18,7 +20,7 @@ export default function Crypto({coin}) {
   const [subscribers, setSubscribers] = useState('')
   const [reddit, setReddit] = useState('')
   const [redditLink, setRedditLink] = useState('')
-
+  
   const {market_cap_rank: rank, name, symbol, current_price: price, market_cap, image} = coin
 
     /* possible styling
@@ -29,6 +31,29 @@ export default function Crypto({coin}) {
         color: theme.palette.text.secondary,
       })); */
 
+      const Trends = () => {
+        return (
+          <>
+            <h2>{name} Trends</h2>
+            <div id="widget">
+              <GoogleTrends
+                type="TIMESERIES"
+                keyword={name}
+                url="https://ssl.gstatic.com/trends_nrtr/2051_RC11/embed_loader.js"
+              />
+              {console.log(name)}
+            </div>
+          </>
+        );
+      }
+
+      const [trends, setTrends] = useState(Trends)
+ 
+      //<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/2790_RC04/embed_loader.js"></script>
+      //<script type="text/javascript">
+       // trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"bitcoin","geo":"","time":"today 12-m"}],"category":0,"property":""}, {"exploreQuery":"q=bitcoin&date=today 12-m","guestPath":"https://trends.google.com:443/trends/embed/"});
+     // </script>
+    
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -39,7 +64,6 @@ export default function Crypto({coin}) {
     currency: 'USD',
     maximumFractionDigits: 0
   })
-
 
   const statistics = async (name) => {
     let reddit = ''
@@ -116,15 +140,10 @@ export default function Crypto({coin}) {
             maxWidth: { xs: 25, md: 25 },
           }}
           alt=""
-          src={image}
+          src='https://logodownload.org/wp-content/uploads/2018/02/reddit-logo-16.png'
         />
         <a href={redditLink} target="_blank">r/{name} </a>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
+          
           </Typography>
         </AccordionDetails>
       </Accordion>
