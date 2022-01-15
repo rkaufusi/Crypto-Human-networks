@@ -14,21 +14,20 @@ function App() {
   useEffect(()=> {
     axios.get(coinGeckoUrl).then((response) => {
       setCurrency(response.data)
+      console.log(currency)
     }).catch(error => console.log(error))
   },[])
 
   const filtered = currency.filter(coin => coin.name.toLowerCase().includes(search.toLowerCase()));
-
-  console.log(filtered);
-
-  console.log(currency);
-
+/*      {filtered.map((value, id) => {
+        return <Crypto coin={value} testCurrency={currency}/>
+      })} */
+      console.log(filtered           )
   return (
     <div className="App">
-      {filtered.map((value) => {
-        return <Crypto coin={value}/>
-      })}
-    
+    {filtered.map((value, id) => {
+      return <Crypto coin={value}/>
+    })}
     </div>
   );
 }

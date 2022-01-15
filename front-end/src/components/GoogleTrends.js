@@ -23,5 +23,5 @@ export default function GoogleTrends({ type, keyword, url }) {
     return <Script url={url} onLoad={handleScriptLoad} />;
   };
 
-  return <div className="googleTrend">{renderGoogleTrend()}</div>;
+  return <div >{renderGoogleTrend()}</div>;
 }

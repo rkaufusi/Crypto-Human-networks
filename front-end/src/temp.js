@@ -24,7 +24,7 @@ export default function Crypto({coin}) {
   const [expanded, setExpanded] = useState(false);
   //const [expanded, setExpanded] = useState([false, false]);
 
-
+  console.log(coin)
 
   const handleChange = (panel) => (event, isExpanded) => {
       console.log(panel);
@@ -33,8 +33,13 @@ export default function Crypto({coin}) {
       setExpanded(isExpanded ? panel : false);
   };
   
-  const {market_cap_rank: rank, name, symbol, current_price: price, market_cap, image} = coin
- 
+  //const {market_cap_rank: rank, name, symbol, current_price: price, market_cap, image} = coin
+  let rank = 1
+  let name = 2
+  let symbol = "3"
+  let price = 4
+  let market_cap = 5
+  let image = 6
 
     /* possible styling
     const Item = styled(Paper)(({ theme }) => ({
@@ -119,6 +124,9 @@ export default function Crypto({coin}) {
 
   return (
     <div>
+    {coin.map((value, id) => {
+      console.log(value)
+    })}
       <Accordion onChange={handleChange(name)} expanded={expanded === name}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
