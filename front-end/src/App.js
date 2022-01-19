@@ -2,6 +2,7 @@ import './App.css';
 import Crypto from './components/crypto.js'
 import {useState, useEffect} from 'react'
 import axios from 'axios'
+import ColumnHeader from './components/columnHeader.js'
 
 function App() {
   const [currency, setCurrency] = useState([])
@@ -25,6 +26,7 @@ function App() {
       console.log(filtered           )
   return (
     <div className="App">
+    <ColumnHeader/>
     {filtered.map((value, id) => {
       return <Crypto coin={value}/>
     })}

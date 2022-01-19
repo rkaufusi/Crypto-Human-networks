@@ -14,8 +14,11 @@ import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import { DataGrid } from '@mui/x-data-grid';
 import data from '../data.js'
+import ColumnHeader from './columnHeader.js'
 
 // trends url 'https://trends.google.com/trends/explore?q=bitcoin'
+
+
 
 export default function Crypto({coin}) {
   const [subscribers, setSubscribers] = useState('')
@@ -119,6 +122,7 @@ export default function Crypto({coin}) {
 
   return (
     <div>
+    
       <Accordion onChange={handleChange(name)} expanded={expanded === name}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
