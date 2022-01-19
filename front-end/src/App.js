@@ -19,6 +19,11 @@ function App() {
     }).catch(error => console.log(error))
   },[])
 
+  const handleChange = (e) => {
+    e.preventDefault()
+    setSearch(e.target.value)
+  }
+
   const filtered = currency.filter(coin => coin.name.toLowerCase().includes(search.toLowerCase()));
 /*      {filtered.map((value, id) => {
         return <Crypto coin={value} testCurrency={currency}/>
@@ -27,6 +32,7 @@ function App() {
   return (
     <div className="App">
     <ColumnHeader/>
+    <input type='text' placeholder='Search' onChange={handleChange} value={search} />
     {filtered.map((value, id) => {
       return <Crypto coin={value}/>
     })}
