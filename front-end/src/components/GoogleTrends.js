@@ -2,10 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Script from "react-load-script";
 
-export default function GoogleTrends({ type, keyword, url }) {
+export default function GoogleTrends({ searchVal, type, keyword, url }) {
+  console.log(`searchVal ` + searchVal)
   const handleScriptLoad = _ => {
     window.trends.embed.renderExploreWidgetTo(
-      document.getElementById("widget"),
+      document.getElementById(searchVal),
       type,
       {
         comparisonItem: [{ keyword, geo: "US", time: "today 12-m" }],

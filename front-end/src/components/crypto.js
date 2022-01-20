@@ -27,7 +27,7 @@ export default function Crypto({coin}) {
   const [expanded, setExpanded] = useState(false);
   //const [expanded, setExpanded] = useState([false, false]);
 
-
+  const componentRef = React.useRef()
 
   const handleChange = (panel) => (event, isExpanded) => {
       console.log(panel);
@@ -88,8 +88,9 @@ export default function Crypto({coin}) {
        return(
         <div>
         <h3>{value} Trends</h3>
-        <div id="widget">
+        <div id={expanded ? expanded : ''}>
           <GoogleTrends
+            searchVal={expanded}
             type="TIMESERIES"
             keyword={value}
             url="https://ssl.gstatic.com/trends_nrtr/2051_RC11/embed_loader.js"
@@ -161,7 +162,7 @@ export default function Crypto({coin}) {
           </Grid>
 
         </AccordionSummary>
-        <AccordionDetails onChange={() => console.log(name)}>
+        <AccordionDetails >
           <Grid container spacing={1}>
             <Grid item xs={1}>
               <Box
@@ -184,11 +185,12 @@ export default function Crypto({coin}) {
         <a href={redditLink} target="_blank">r/{name} </a>   
       </Grid>
       <Grid item xs={6} align="left">
-      {expanded && (          
+      {expanded && (      
         <div>
         <h3>{name} Trends</h3>
-        <div id="widget">
+        <div id={expanded ? expanded : ''}>
           <GoogleTrends
+            searchVal={expanded}
             type="TIMESERIES"
             keyword={name}
             url="https://ssl.gstatic.com/trends_nrtr/2051_RC11/embed_loader.js"
