@@ -6,18 +6,38 @@ import ColumnHeader from './components/columnHeader.js'
 
 function App() {
   const [currency, setCurrency] = useState([])
-  const coinGeckoUrl = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false'
   const [search, setSearch] = useState('')
+  const [testVal, setTestVal] = useState()
 
+  const testArr = [];
+
+  const coinGeckoUrl = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false'
+  
   // QfdjLn4WrJdC1iIhYA_a1w
   // secret ImpKTLCbEUI5enMfipsd0sNnjVwReg
 
   useEffect(()=> {
     axios.get(coinGeckoUrl).then((response) => {
       setCurrency(response.data)
-      console.log(currency)
+      //console.log(currency)
     }).catch(error => console.log(error))
   },[])
+
+  const testUrl = 'https://www.reddit.com/r/bitcoin/about.json'
+
+  const tempFunc = () => {
+    let temp = []
+      axios.get(testUrl).then((response) => {
+        const date = new Date()
+        setTestVal(response.data.data)
+        console.log(response.data.data.display_name, response.data.data.subscribers, date)
+      }).catch(error => console.log(error))
+      
+  } 
+
+  // clear timeout
+
+  // setInterval(() => tempFunc(), otherTestFunc(), 20000)
 
   const handleChange = (e) => {
     e.preventDefault()
@@ -28,7 +48,7 @@ function App() {
 /*      {filtered.map((value, id) => {
         return <Crypto coin={value} testCurrency={currency}/>
       })} */
-      console.log(filtered           )
+      //console.log(filtered)
   return (
     <div className="App">
     <ColumnHeader/>
