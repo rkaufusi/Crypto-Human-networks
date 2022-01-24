@@ -17,8 +17,6 @@ function App() {
     }).catch(error => console.log(error))
   },[]) 
 
-  const testUrl = 'https://www.reddit.com/r/bitcoin/about.json'
-
   const handleChange = (e) => {
     e.preventDefault()
     setSearch(e.target.value)
@@ -28,11 +26,11 @@ function App() {
 
   return (
     <div className="App">
-    <ColumnHeader/>
-    <input type='text' placeholder='Search' onChange={handleChange} value={search} />
-    {filtered.map((value, id) => {
-      return <Crypto coin={value}/>
-    })}
+      <ColumnHeader/>
+      <input type='text' placeholder='Search' onChange={handleChange} value={search} />
+        {filtered.map((value, id) => {
+          return <Crypto coin={value}/>
+        })}
     </div>
   );
 }

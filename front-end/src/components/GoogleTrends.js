@@ -9,12 +9,12 @@ export default function GoogleTrends({ searchVal, type, keyword, url }) {
       document.getElementById(searchVal),
       type,
       {
-        comparisonItem: [{ keyword, geo: "US", time: "today 12-m" }],
+        comparisonItem: [{ keyword, geo: "US", time: "today 3-m" }],
         category: 0,
         property: ""
       },
       {
-        exploreQuery: `q=${encodeURI(keyword)}&geo=US&date=today 12-m`,
+        exploreQuery: `q=${encodeURI(keyword)}&geo=US&date=today 3-m`,
         guestPath: "https://trends.google.com:443/trends/embed/"
       }
     );
