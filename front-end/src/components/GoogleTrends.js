@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import Script from "react-load-script";
 
 export default function GoogleTrends({ searchVal, type, keyword, url }) {
-  console.log(`searchVal ` + searchVal)
   const handleScriptLoad = _ => {
     window.trends.embed.renderExploreWidgetTo(
       document.getElementById(searchVal),

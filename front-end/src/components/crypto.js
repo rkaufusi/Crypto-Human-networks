@@ -1,52 +1,40 @@
 import * as React from 'react';
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import GoogleTrends from './GoogleTrends.js'
 // grid
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import { styled } from '@mui/material/styles';
-import { DataGrid } from '@mui/x-data-grid';
 import data from '../data.js'
 import {useWindowSize} from '../windowSize.js'
+import Chart from './chart.js'
 
 export default function Crypto({coin}) {
   const [subscribers, setSubscribers] = useState('')
-  const [reddit, setReddit] = useState('')
   const [redditLink, setRedditLink] = useState('')
   const [expanded, setExpanded] = useState(false);
   const [priceHistory, setPriceHistory] = useState([])
   const width = useWindowSize();
 
-  const handleChange = (panel) => (event, isExpanded) => {
+  const handleChange = (panel, searchVal) => (event, isExpanded) => {
       setExpanded(isExpanded ? panel : false);
-      statistics(panel)
-      history(panel)
+      history(searchVal)
+      statistics(panel) 
   };
   
-  const {market_cap_rank: rank, name, symbol, current_price: price, market_cap, image, total_volume: volume} = coin
- 
-    /* possible styling
-    const Item = styled(Paper)(({ theme }) => ({
-        ...theme.typography.body2,
-        padding: theme.spacing(1),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-      })); */
+  const {id, market_cap_rank: rank, name, symbol, current_price: price, market_cap, image, total_volume: volume} = coin
 
   const history = async (val) => {
-    let pHistory = `https://api.coingecko.com/api/v3/coins/${val.toLowerCase()}/market_chart/range?vs_currency=usd&from=1611387323&to=1642923323`
+    let pHistory = `https://api.coingecko.com/api/v3/coins/${val.toLowerCase()}/market_chart/range?vs_currency=usd&from=1635235010&to=1643187410`
     try {
       const response = await fetch(pHistory)
       const myData = await response.json()
-      setPriceHistory(myData.market_caps)  
+      setPriceHistory(myData.market_caps)
     } catch (error) {
-      console.log(error)
+      console.log(`price history ` + error)
     }
   }
     
@@ -116,16 +104,16 @@ export default function Crypto({coin}) {
     
   return (
     <div>
-      <Accordion onChange={handleChange(name)} expanded={expanded === name}>
+      <Accordion onChange={handleChange(name, id)} expanded={expanded === name}>
         <AccordionSummary
           expandIcon={width > 800 ? <ExpandMoreIcon /> : null}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
           <Grid container spacing={2}>
-          {width > 800 ? <Grid item xs={1}>
-          {rank}   
-          </Grid> : <Grid item xs={0}/>}
+            {width > 800 ? <Grid item xs={1}>
+            {rank}   
+            </Grid> : <Grid item xs={0}/>}
   
             <Grid item xs={1}>
               <Box
@@ -133,8 +121,6 @@ export default function Crypto({coin}) {
                 sx={{
                   height: 25,
                   width: 25,
-                  maxHeight: { xs: 25, md: 25 },
-                  maxWidth: { xs: 25, md: 25 },
                 }}
                 alt=""
                 src={image}
@@ -143,9 +129,9 @@ export default function Crypto({coin}) {
             <Grid item xs={2} align="left">
               {name} 
             </Grid>
-            {width > 800 ? <Grid item xs={1} align="left">
+              {width > 800 ? <Grid item xs={1} align="left">
               {symbol.toUpperCase()}
-            </Grid> : <Grid item xs={0}/>}
+              </Grid> : <Grid item xs={0}/>}
 
             <Grid item xs={2.5} align="left">
               {formatter.format(price)}
@@ -158,31 +144,29 @@ export default function Crypto({coin}) {
           </Grid>
           </Grid>
         </AccordionSummary>
-        <AccordionDetails onChange={() => console.log(priceHistory)}>
+        <AccordionDetails >
           <Grid container spacing={1}>
-            <Grid item xs={1}>
+            <Grid item xs={2} align="center">
               <Box
                 component="img"
                 sx={{
-                  height: 25,
-                  width: 25,
-                  maxHeight: { xs: 25, md: 25 },
-                maxWidth: { xs: 25, md: 25 },
+                  height: 40,
+                  width: 40,
                 }}
                 alt=""
                 src='https://logodownload.org/wp-content/uploads/2018/02/reddit-logo-16.png'
               />   
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={3} align="left">
             {`Reddit subscribers ` + subscribers}    
           </Grid>
-        <Grid item xs={2} align="left">
+        <Grid item xs={3} align="left">
         <a href={redditLink} target="_blank">r/{name} </a>   
       </Grid>
-      <Grid item xs={7} align="left">
+      <Grid item xs={6} align="left">
       {expanded && (      
         <div>
-        <h3>{name} Trends</h3>
+        <h3>Google Trends</h3>
         <div id={expanded ? expanded : ''}>
           <GoogleTrends
             searchVal={expanded}
@@ -191,11 +175,13 @@ export default function Crypto({coin}) {
             url="https://ssl.gstatic.com/trends_nrtr/2051_RC11/embed_loader.js"
           />
         </div>
-        <div>
-          {priceHistory}
-        </div>
+
       </div>)}
       </Grid>
+      <Grid item xs={6}>
+      <h3>Market Cap History</h3>
+      <Chart ph={priceHistory ? priceHistory : ''}/>
+    </Grid>
           </Grid>
         </AccordionDetails>
       </Accordion>

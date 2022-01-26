@@ -4,16 +4,18 @@ import {useState, useEffect} from 'react'
 import axios from 'axios'
 import ColumnHeader from './components/columnHeader.js'
 
+
+
+
 function App() {
   const [currency, setCurrency] = useState([])
   const [search, setSearch] = useState('')
 
-  const coinGeckoUrl = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=110&page=1&sparkline=false'
+  const coinGeckoUrl = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false'
 
   useEffect(()=> {
     axios.get(coinGeckoUrl).then((response) => {
       setCurrency(response.data)
-      //console.log(currency)
     }).catch(error => console.log(error))
   },[]) 
 
