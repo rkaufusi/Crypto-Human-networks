@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {Chart as ChartJS, BarElement, CategoryScale, LinearScale, LineElement, PointElement} from 'chart.js'
 import { Bar, Line } from 'react-chartjs-2'
 
@@ -12,13 +12,28 @@ const Chart = ({ph}) => {
         PointElement
     )
     let testLabels = []
-    let testLabels1 = []
-    let historyData = []
-    for(let i = 0; i < ph.length; i++){
-        if(i > 99) break
-        testLabels.push(ph[i][0])
-        historyData.push(ph[i][1])
-    }
+
+    const [testLabels1, settestLabels1] = useState([])
+    const [historyData, sethistoryData] = useState([])
+
+    useEffect(() => {
+        if(ph.length > 0){
+            let label = []
+            let amount = []
+            for(let i = ph.length - 1; i > ph.length - 100; i--){
+                label.unshift(ph[i][0])
+                amount.unshift(ph[i][1])   
+            }
+            let curr = []
+            for(let i = 0; i < label.length; i++){
+                let d = new Date(label[i]) 
+                let formatted = d.toLocaleDateString()
+                curr.push(formatted)
+            }
+            settestLabels1(curr)
+            sethistoryData(amount)
+        }
+    },[ph])
 
     for(let i = 0; i < testLabels.length; i++){
         let d = new Date(testLabels[i]) 
@@ -29,7 +44,7 @@ const Chart = ({ph}) => {
     let data = {
         labels: testLabels1,
         datasets: [{
-            label: '# of Votes',
+            label: '',
             data: historyData,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',

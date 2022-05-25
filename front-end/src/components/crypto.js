@@ -24,11 +24,20 @@ export default function Crypto({coin}) {
       history(searchVal)
       statistics(panel) 
   };
+
+
+ 
+
   
   const {id, market_cap_rank: rank, name, symbol, current_price: price, market_cap, image, total_volume: volume} = coin
 
   const history = async (val) => {
-    let pHistory = `https://api.coingecko.com/api/v3/coins/${val.toLowerCase()}/market_chart/range?vs_currency=usd&from=1635235010&to=1643187410`
+    let dateVal = new Date()
+    let tillDate = Math.floor(dateVal.getTime() / 1000)
+    let fromDate = Math.floor((tillDate / 1000) - 7952400)
+    //let pHistory = `https://api.coingecko.com/api/v3/coins/${val.toLowerCase()}/market_chart/range?vs_currency=usd&from=1650235010&to=1653513936`
+    let pHistory = `https://api.coingecko.com/api/v3/coins/${val.toLowerCase()}/market_chart/range?vs_currency=usd&from=${fromDate}&to=${tillDate}`
+
     try {
       const response = await fetch(pHistory)
       const myData = await response.json()
@@ -101,7 +110,7 @@ export default function Crypto({coin}) {
       }
       return formatterMarketCap.format(val)
     }
-    
+
   return (
     <div>
       <Accordion onChange={handleChange(name, id)} expanded={expanded === name}>
